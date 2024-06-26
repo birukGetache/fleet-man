@@ -7,10 +7,9 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.scene.layout.GridPane;
+
 public class CarDashBoard extends Application {
 
     // URLs of images to load
@@ -22,6 +21,8 @@ public class CarDashBoard extends Application {
 
     private BorderPane root;
     private ImageView icon;
+    private Scene scene;
+    private OverviewPage overviewPage; // Assuming you have an OverviewPage class
 
     @Override
     public void start(Stage primaryStage) {
@@ -37,8 +38,7 @@ public class CarDashBoard extends Application {
                 "Drivers",
                 "Routes",
                 "Reports",
-                "Settings"
-        );
+                "Settings");
 
         // Creating ListView to display items
         ListView<String> listView = new ListView<>(items);
@@ -59,41 +59,40 @@ public class CarDashBoard extends Application {
         icon.setFitWidth(300); // Set the width to match the scene width
         icon.setPreserveRatio(true); // Preserve aspect ratio
 
-        HBox topBox = new HBox(icon);
-        topBox.setPadding(new Insets(10));
+        // Initialize OverviewPage
+        overviewPage = new OverviewPage();
+        root.setCenter(overviewPage); // Initially set to OverviewPage
 
-        // Adding the top box to the BorderPane and setting it to the top
-        root.setTop(topBox);
-        BorderPane.setAlignment(topBox, javafx.geometry.Pos.CENTER); // Align center
-        BorderPane.setMargin(topBox, new Insets(10, 10, 0, 10)); // Set margins
-
+        FleetStatusPage fleetStatusOverview = new FleetStatusPage();
+        PerformanceMetricsPage performance = new PerformanceMetricsPage();
+        VehiclePage vehicles = new VehiclePage(primaryStage);
+        DriverListPage driver = new DriverListPage();
+        FleetReportPage fleet = new FleetReportPage();
+        SettingsPage setting = new SettingsPage();
         // Event handler for ListView item clicks
         listView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 switch (newValue) {
                     case "Overview":
-                        showOverviewPage();
+                        root.setCenter(overviewPage);
                         break;
                     case "Fleet Status":
-                        showFleetStatusOverview(primaryStage);
+                        root.setCenter(fleetStatusOverview);
                         break;
                     case "Performance Metrics":
-                        // Implement Performance Metrics logic here
+                        root.setCenter(performance);
                         break;
                     case "Vehicles":
-                        // Implement Vehicles logic here
+                        root.setCenter(vehicles);
                         break;
                     case "Drivers":
-                        // Implement Drivers logic here
-                        break;
-                    case "Routes":
-                        // Implement Routes logic here
+                        root.setCenter(driver);
                         break;
                     case "Reports":
-                        // Implement Reports logic here
+                        root.setCenter(fleet);
                         break;
                     case "Settings":
-                        // Implement Settings logic here
+                        root.setCenter(setting);
                         break;
                     default:
                         break;
@@ -111,25 +110,18 @@ public class CarDashBoard extends Application {
         // Set sidebar to the left of BorderPane
         root.setLeft(sidebar);
 
-        // Creating a scene
-        Scene scene = new Scene(root, 500, 400); // Set overall scene size
+        // Adding the top box to the BorderPane and setting it to the top
+        root.setTop(icon);
+        BorderPane.setAlignment(icon, javafx.geometry.Pos.CENTER); // Align center
+        BorderPane.setMargin(icon, new Insets(10, 10, 0, 10)); // Set margins
+
+        // Create a scene
+        scene = new Scene(root, 800, 600);
 
         // Setting the stage
         primaryStage.setScene(scene);
         primaryStage.setTitle("Dashboard");
         primaryStage.show();
-    }
-
-    private void showOverviewPage() {
-        // Implement OverviewPage logic here
-        // Example: OverviewPage overviewPage = new OverviewPage();
-        // root.setCenter(overviewPage);
-    }
-
-    private void showFleetStatusOverview(Stage primaryStage) {
-        FleetStatusOverview fleetStatusOverview = new FleetStatusOverview();
-        GridPane gridPane = fleetStatusOverview.getGridPane(); // Assuming getGridPane returns the GridPane
-        root.setCenter(gridPane); // Set the GridPane as the center of the BorderPane
     }
 
     public static void main(String[] args) {

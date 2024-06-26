@@ -3,6 +3,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CarDashBoard",
+            "request": "launch",
+            "mainClass": "CarDashBoard",
+            "projectName": "fle_6d38b55d"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"

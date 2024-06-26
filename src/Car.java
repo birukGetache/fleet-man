@@ -2,7 +2,8 @@ public class Car {
     private String name;
     private String description;
     private String imageUrl;
-
+    private String Location;
+    private String accident;
     public Car(String name, String description, String imageUrl) {
         this.name = name;
         this.description = description;
@@ -29,8 +30,25 @@ public class Car {
     public String getImageUrl() {
         return imageUrl;
     }
+    public String getLocation() {
+        return Location;
+    }
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
+    public String getAccidents() {
+     return accident;
+    }
+
+    public boolean addAccident(String string) {
+        
+   return true;
+    }
+
+    public boolean addDrive(String string, String string2, int i) {
+return true;
+    }
+    
 }
